@@ -1,0 +1,9 @@
+from application import create_app
+from application.database import db
+
+application = create_app('default')
+db.init_app(application)
+
+if __name__ == '__main__':
+    application.run(debug=True, host="localhost")
+

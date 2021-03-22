@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  db:
+    container_name: db_mysql
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: web_shop
+      MYSQL_USER: user-1
+      MYSQL_PASSWORD: user-1
+    restart: always
+    ports:
+      - "5432:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+  app:
+    container_name: application
+    build:
+      context: ./admin_web
+      dockerfile: Dockerfile
+    ports:
+      - 8010:5000
+    volumes:
+      - ./app:/app
+    links:
+      - db
+    depends_on:
+      - db
+    environment:
+      APP_ID: 1
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: database
+      MYSQL_USER: user-1
+      MYSQL_PASSWORD: user-1
+volumes:
+  db_data: { }
