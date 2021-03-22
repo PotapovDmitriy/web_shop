@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, request
 
 from ..database import db
 from ..models.category import Category
@@ -11,10 +11,9 @@ admin_routs = Blueprint('admin_routs', __name__)
 def index():
     try:
         db.create_all()
-
         return "Index"
     except Exception as ex:
-
+        print(str(ex))
         return ({
                     'ERROR': str(ex)
                 }, 400)
@@ -38,6 +37,22 @@ def show_category():
         db.session.commit()
 
         return str(category.products[0].name)
+    except Exception as ex:
+
+        return ({
+                    'ERROR': str(ex)
+                }, 400)
+    finally:
+        db.session.close()
+
+
+@admin_routs.route('/new_category', methods=['GET', 'POST'])
+def create_category():
+    try:
+        if request.method == "POST":
+            return "Ничего не готово, что ты сюда лезешь"
+        if request.method == "GET":
+            return "Пастрижися"
     except Exception as ex:
 
         return ({
