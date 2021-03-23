@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Montserrat:wght@400;500;600&display=swap');
+.title_of_shop,
+.title_of_form{
+    color: #475F7B;
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+.title_of_form{
+    color: #727E8C;
+    margin-bottom: 15px;
+}
+
+.create_button{
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 2px 4px 0 rgba(90,141,238,.5);
+    border: 0 solid transparent;
+    border-radius: 3px;
+    padding: 7px 22px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    line-height: 20px;
+    background-color: #5A8DEE;
+    color: #FFF;
+    width: max-content;
+    height: 34%;
+    text-align: center;
+    outline: none;
+    margin-bottom: 15px;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+.create_button:hover{
+    background-color: #719DF0;
+    box-shadow: 0 4px 12px 0 rgba(90,141,238,.6);
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: #727E8C;
+    width: 400px;
+}
+.page{
+    margin-left: 30px;
+}
+
+.label_for_name_category{
+    margin: 5px 0;
+}
+
+.input,
+.select,
+.textarea{
+    outline: none;
+    border-radius: 6px;
+    border: 1px solid #DFE3E7;
+    padding: 5px;
+    color: #727E8C;
+    margin-bottom: 10px;
+}
+
+.select_category_block{
+    margin-bottom: 10px;
+}
+
+
+
+.is_nil_block{
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.textarea{
+    resize: none;
+}
