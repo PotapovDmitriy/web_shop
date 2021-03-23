@@ -39,7 +39,7 @@ def create_category():
 
             db.session.add(Category(name, parent_id, is_nil))
             db.session.commit()
-            return redirect(url_for("admin_routs.index"))
+            return redirect(url_for("admin_routs.categories"))
         if request.method == "GET":
             parents_category = db.session.query(Category).filter_by(nil=False).all()
             return render_template('new_category.html', parents=parents_category)
@@ -55,7 +55,6 @@ def create_category():
 @admin_routs.route('/new_product', methods=['GET', 'POST'])
 def create_product():
     try:
-        form = request.form
         if request.method == "POST":
             name = request.form['name']
             category_id = None
@@ -66,13 +65,14 @@ def create_product():
             summary = request.form['summary']
             characteristic = request.form['characteristic']
 
-            files = request.files
-            f = request.files['image']
-            path = save_image(f, name)
+            # files = request.files
+            # f = request.files['image']
+            # path = save_image(f, name)
+            path = request.form['image']
 
             db.session.add(Product(name, category_id, price, summary, characteristic, path))
             db.session.commit()
-            return redirect(url_for("admin_routs.index"))
+            return redirect(url_for("admin_routs.products"))
         if request.method == "GET":
             nil_categories = db.session.query(Category).filter_by(nil=True).all()
             return render_template('new_product.html', categories=nil_categories)
@@ -114,7 +114,7 @@ def categories():
 def delete_category():
     try:
         cat_id = request.form["id"]
-        category = request.query(Category).get(cat_id)
+        category = db.session.query(Category).get(cat_id)
         if len(category.products) != 0 or len(category.get_children_if_exist()) != 0:
             return "НЕльзя удалять категорию у которой есть дочки"
         db.session.delete(category)
@@ -132,10 +132,81 @@ def delete_category():
 def delete_product():
     try:
         pr_id = request.form["id"]
-        product = request.query(Product).get(pr_id)
+        product = db.session.query(Product).get(pr_id)
         db.session.delete(product)
         db.session.commit()
         return redirect(url_for("admin_routs.products"))
+    except Exception as ex:
+        return ({
+                    'ERROR': str(ex)
+                }, 400)
+    finally:
+        db.session.close()
+
+
+@admin_routs.route('/product/<id>', methods=['GET', 'POST'])
+def redact_product(id):
+    try:
+
+        product = db.session.query(Product).get(id)
+        if request.method == "POST":
+            name = request.form['name']
+            category_id = None
+            if request.form['category'] != "Не выбрана":
+                category = db.session.query(Category).filter_by(name=request.form['category']).first()
+                category_id = category.id
+            price = request.form['price']
+            summary = request.form['summary']
+            characteristic = request.form['characteristic']
+
+            # files = request.files
+            # f = request.files['image']
+            # path = save_image(f, name)
+            path = request.form['image']
+
+            product.name = name
+            product.price = price
+            product.characteristic = characteristic
+            product.summary = summary
+            product.image_url = path
+            db.session.add(product)
+            db.session.commit()
+            return redirect(url_for("admin_routs.products"))
+        if request.method == "GET":
+            nil_categories = db.session.query(Category).filter_by(nil=True).all()
+            return render_template('redact_product.html', categories=nil_categories, product=product)
+    except Exception as ex:
+        return ({
+                    'ERROR': str(ex)
+                }, 400)
+    finally:
+        db.session.close()
+
+
+@admin_routs.route('/category/<id>', methods=['GET', 'POST'])
+def redact_category(id):
+    try:
+
+        category = db.session.query(Category).get(id)
+        if request.method == "POST":
+            name = request.form['name']
+            parent_id = None
+            if request.form['parent'] != "Не выбрана":
+                parent = db.session.query(Category).filter_by(name=request.form['parent']).first()
+                parent_id = parent.id
+            is_nil = False
+            if "isNil" in dict(request.form):
+                if request.form['isNil'] == "on":
+                    is_nil = True
+            category.name = name
+            category.parent_category_id = parent_id
+            category.nil = is_nil
+            db.session.add(category)
+            db.session.commit()
+            return redirect(url_for("admin_routs.categories"))
+        if request.method == "GET":
+            parents_category = db.session.query(Category).filter_by(nil=False).all()
+            return render_template('redact_category.html', parents=parents_category, category=category)
     except Exception as ex:
         return ({
                     'ERROR': str(ex)
