@@ -1,4 +1,5 @@
 from ..database import db
+from .category import Category
 
 
 class Product(db.Model):
@@ -21,3 +22,7 @@ class Product(db.Model):
         self.summary = summary
         self.characteristic = characteristic
         self.image_url = url
+    
+    def get_category_name(self): 
+        cat = db.session.query(Category).get(self.category_id)
+        return cat.name

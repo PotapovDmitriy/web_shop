@@ -18,3 +18,12 @@ class Category(db.Model):
 
     def __repr__(self):
         return '<Category: {}>'.format(self.id)
+
+    def get_children_if_exist(self):
+        return db.session.query(Category).filter_by(parent_category_id=self.id).all()
+
+    def count_of_children(self):
+        if self.nil:
+            return len(self.products)
+        else:
+            return len(self.get_children_if_exist())

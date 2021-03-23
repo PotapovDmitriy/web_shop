@@ -19,15 +19,20 @@
     </div>
     <div>
         <label for='product_summary'>Описание товара</label>
-        <textarea class="textarea"  id='product_summary' name='summary' placeholder="Введите описание товара" required> </textarea>
+        <textarea class="textarea"  id='product_summary' name='summary' placeholder="Введите описание товара" required></textarea>
     </div>
     <div>
         <label for='product_characteristic'>Характеристики товара</label>
         <textarea class="textarea"  id='product_characteristic' name='characteristic' placeholder="Введите характеристики товара" required></textarea>
     </div>
-    <label>
+    <div>
+        <label for='product_image'>Вставьте ссылку на изображение:</label>
+        <input class="input" type="text" id='product_image' name='image' placeholder="Вставьте ссылку" required/>
+    </div>
+    <!-- <label class="load_image_btn">
+        Добавить фото
         <input type="file" name='image' accept=".png, .jpg, .jpeg">
-    </label>
+    </label> -->
     <input type=submit value='Создать' class="create_button">
 </form>
 {% endblock %}
