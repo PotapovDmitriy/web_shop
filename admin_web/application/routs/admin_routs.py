@@ -97,7 +97,7 @@ def products():
         db.session.close()
 
 
-@admin_routs.route('/categories ', methods=['GET'])
+@admin_routs.route('/categories', methods=['GET'])
 def categories():
     try:
         all_categories = db.session.query(Category).all()
@@ -190,17 +190,17 @@ def redact_category(id):
         category = db.session.query(Category).get(id)
         if request.method == "POST":
             name = request.form['name']
-            parent_id = None
-            if request.form['parent'] != "Не выбрана":
-                parent = db.session.query(Category).filter_by(name=request.form['parent']).first()
-                parent_id = parent.id
-            is_nil = False
-            if "isNil" in dict(request.form):
-                if request.form['isNil'] == "on":
-                    is_nil = True
+            # parent_id = None
+            # if request.form['parent'] != "Не выбрана":
+            #     parent = db.session.query(Category).filter_by(name=request.form['parent']).first()
+            #     parent_id = parent.id
+            # is_nil = False
+            # if "isNil" in dict(request.form):
+            #     if request.form['isNil'] == "on":
+            #         is_nil = True
             category.name = name
-            category.parent_category_id = parent_id
-            category.nil = is_nil
+            # category.parent_category_id = parent_id
+            # category.nil = is_nil
             db.session.add(category)
             db.session.commit()
             return redirect(url_for("admin_routs.categories"))

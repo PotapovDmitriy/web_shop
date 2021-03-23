@@ -27,3 +27,6 @@ class Category(db.Model):
             return len(self.products)
         else:
             return len(self.get_children_if_exist())
+
+    def get_parent(self):
+        return db.session.query(Category).get(self.parent_category_id)
