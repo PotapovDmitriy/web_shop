@@ -110,7 +110,7 @@ def categories():
         db.session.close()
 
 
-@admin_routs.route('/delete_category ', methods=['DELETE'])
+@admin_routs.route('/delete_category ', methods=['POST'])
 def delete_category():
     try:
         cat_id = request.form["id"]
@@ -128,7 +128,7 @@ def delete_category():
         db.session.close()
 
 
-@admin_routs.route('/delete_product ', methods=['DELETE'])
+@admin_routs.route('/delete_product ', methods=['POST'])
 def delete_product():
     try:
         pr_id = request.form["id"]
