@@ -51,15 +51,17 @@ def show_category():
 def create_category():
     try:
         if request.method == "POST":
+            form = request.form
             name = request.form['name']
             parent_id = None
             if request.form['parent'] != "Не выбрана":
                 parent = db.session.query(Category).filter_by(name=request.form['parent']).first()
                 parent_id = parent.id
-            if request.form['isNil'] == "on":
-                is_nil = True
-            else:
-                is_nil = False
+            is_nil = False
+            if "isNil" in dict(request.form):
+                if request.form['isNil'] == "on":
+                    is_nil = True
+
             db.session.add(Category(name, parent_id, is_nil))
             db.session.commit()
             return redirect(url_for("admin_routs.index"))
