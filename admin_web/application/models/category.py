@@ -16,8 +16,13 @@ class Category(db.Model):
         self.parent_category_id = parent_id
         self.nil = nil
 
-    def __repr__(self):
-        return '<Category: {}>'.format(self.id)
+    def to_json(self):
+        return {
+            "category_id": self.id,
+            "name": self.name,
+            "parent_name": self.get_parent(),
+            "isNil": self.nil
+        }
 
     def get_children_if_exist(self):
         return db.session.query(Category).filter_by(parent_category_id=self.id).all()
@@ -30,3 +35,6 @@ class Category(db.Model):
 
     def get_parent(self):
         return db.session.query(Category).get(self.parent_category_id)
+
+    def can_be_nil(self):
+        return len(self.get_children_if_exist()) == 0
