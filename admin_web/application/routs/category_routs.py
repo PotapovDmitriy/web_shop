@@ -13,7 +13,7 @@ def create_category():
             json_body = request.json
             name = json_body['name']
             parent_id = None
-            if json_body['parent'] != "Не выбрана":
+            if json_body['parent_name'] is not None:
                 parent = category_repository.get_by_name(json_body['parent'])
                 if parent.nil:
                     return {"msg": "Parent can not be nil!"}

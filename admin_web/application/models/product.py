@@ -22,7 +22,18 @@ class Product(db.Model):
         self.summary = summary
         self.characteristic = characteristic
         self.image_url = url
-    
-    def get_category_name(self): 
+
+    def get_category_name(self):
         cat = db.session.query(Category).get(self.category_id)
         return cat.name
+
+    def to_json(self):
+        return {
+            "product_id": self.id,
+            "name": self.name,
+            "category": self.get_category_name(),
+            "price": self.price,
+            "summary": self.summary,
+            "characteristic": self.characteristic,
+            "image_url": self.image_url
+        }
