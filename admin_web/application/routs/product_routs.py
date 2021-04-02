@@ -1,11 +1,11 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 
 from ..database import db
-from ..models.category import Category
+from ..messages import message
 from ..models.product import Product
-from ..repository import product_repository, category_repository
+from ..repository import product_repository
 
-product_routs = Blueprint('admin_routs', __name__)
+product_routs = Blueprint('product_routs', __name__)
 
 
 @product_routs.route('/', methods=['GET'])
@@ -27,14 +27,14 @@ def create_product():
         json_body = request.json
         name = json_body['name']
 
-        category = category_repository.get_by_name(json_body["category"])
-        category_id = category.id if category is not None else None
+        category_id = json_body["category_id"]
         price = json_body['price']
         summary = json_body['summary']
         characteristic = json_body['characteristic']
         path = json_body['image_url']
 
-        product_repository.add_new(name, category_id, price, summary, characteristic, path)
+        new_product = product_repository.add_new(name, category_id, price, summary, characteristic, path)
+        message.send_message_for_create_product(new_product.to_json())
         return {"msg": True}
 
     except Exception as ex:
@@ -75,7 +75,7 @@ def get_product():
         db.session.close()
 
 
-@product_routs.route('/delete_product ', methods=['POST'])
+@product_routs.route('/delete_product', methods=['GET'])
 def delete_product():
     try:
         product_id = request.args.get("id")
@@ -97,8 +97,8 @@ def redact_product():
         product = db.session.query(Product).get(product_id)
 
         name = json_body['name']
-        category = category_repository.get_by_name(json_body['category'])
-        category_id = category.id if category is not None else None
+        category_id = json_body['category_id']
+
         price = json_body['price']
         summary = json_body['summary']
         characteristic = json_body['characteristic']

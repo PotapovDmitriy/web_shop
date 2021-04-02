@@ -3,8 +3,12 @@ from ..models.product import Product
 
 
 def add_new(name, category_id, price, summary, characteristic, path):
-    db.session.add(Product(name, category_id, price, summary, characteristic, path))
+    product = Product(name, category_id, price, summary, characteristic, path)
+    db.session.add(product)
+    db.session.flush()
+    db.session.refresh(product)
     db.session.commit()
+    return product
 
 
 def update(product, name, category_id, price, summary, characteristic, path):
@@ -35,4 +39,3 @@ def delete(product):
     db.session.delete(product)
     db.session.commit()
     return True
-

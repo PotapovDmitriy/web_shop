@@ -31,7 +31,8 @@ class Product(db.Model):
         return {
             "product_id": self.id,
             "name": self.name,
-            "category": self.get_category_name(),
+            "category_name": self.get_category_name(),
+            "category_id": self.category_id,
             "price": self.price,
             "summary": self.summary,
             "characteristic": self.characteristic,

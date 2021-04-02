@@ -12,12 +12,11 @@ def create_category():
         if request.method == "POST":
             json_body = request.json
             name = json_body['name']
-            parent_id = None
-            if json_body['parent_name'] is not None:
-                parent = category_repository.get_by_name(json_body['parent'])
+            parent_id = json_body["parent_id"]
+            if parent_id is not None:
+                parent = category_repository.get_by_id(parent_id)
                 if parent.nil:
                     return {"msg": "Parent can not be nil!"}
-                parent_id = parent.id
             is_nil = json_body['isNil']
             category_repository.add_new(name, parent_id, is_nil)
 
@@ -61,7 +60,7 @@ def get_category():
         db.session.close()
 
 
-@category_routs.route('/delete_category ', methods=['POST'])
+@category_routs.route('/delete_category ', methods=['GET'])
 def delete_category():
     try:
         category_id = request.args.get("id")
@@ -88,14 +87,14 @@ def redact_category():
         name = json_body['name']
         is_nil = json_body['isNil']
         # Вот тут надо подумать, принимать название категории или ее id
-        parent_category_name = json_body['parent_name']
+        parent_category_id = json_body['parent_id']
         category = category_repository.get_by_id(category_id)
         parent_id = None
-        if parent_category_name:
-            parent = category_repository.get_by_name(parent_category_name)
+        if parent_category_id:
+            parent = category_repository.get_by_id(parent_category_id)
             if parent.nil:
                 return {"msg": "Parent can not be nil!"}
-            parent_id = parent.id
+
         if category.can_be_nil() and is_nil:
             return category_repository.update(category, name, parent_id, is_nil)
         else:
