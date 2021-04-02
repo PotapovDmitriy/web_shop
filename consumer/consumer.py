@@ -17,11 +17,9 @@ def callback(ch, method, properties, body):
     json_body = json.loads(body.decode())
     type_number = json_body['type']
     json_body = json.loads(body.decode())
-    print(json_body)
 
-    conn_str = "http://catalog_api:8020/new_product"
+    conn_str = "http://catalog_api:5010/new_product"
     data = json_body['data']
-    print(data)
     requests.post(conn_str, json=data)
 
 

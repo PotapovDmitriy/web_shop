@@ -18,5 +18,5 @@ def get_product_by_id(product_id) -> {}:
 
 
 def get_products_by_category_id(category_id) -> []:
-    results = products_collection.find({"product_category_id": category_id}, {"_id": 0})
+    results = products_collection.find({"category_id": category_id}, {"_id": 0})
     return [r for r in results]

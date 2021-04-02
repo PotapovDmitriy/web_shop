@@ -18,10 +18,10 @@ def get_category_by_id(category_id) -> {}:
 
 
 def get_all_root_category() -> []:
-    results = categories_collection.find({"root_category_id": None}, {"_id": 0})
+    results = categories_collection.find({"parent_category_id": None}, {"_id": 0})
     return [r for r in results]
 
 
 def get_all_children_category(category_id) -> []:
-    results = categories_collection.find({"root_category_id": category_id}, {"_id": 0})
+    results = categories_collection.find({"parent_category_id": category_id}, {"_id": 0})
     return [r for r in results]

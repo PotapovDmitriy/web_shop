@@ -30,6 +30,9 @@ services:
     build:
       context: ./consumer
       dockerfile: Dockerfile
+    links:
+      - catalog_api
+      - admin_api
     depends_on:
       - rabbit
   rabbit:
@@ -60,6 +63,7 @@ services:
       - db
     depends_on:
       - db
+      - rabbit
     environment:
       APP_ID: 1
       MYSQL_ROOT_PASSWORD: root
@@ -72,7 +76,10 @@ services:
       context: ./catalog_api
       dockerfile: Dockerfile
     ports:
-      - 8020:5000
+      - 8020:5010
+    depends_on:
+      - mongo
+      - rabbit
     volumes:
       - ./app:/app
 volumes:
