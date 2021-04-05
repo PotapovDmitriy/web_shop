@@ -11,13 +11,13 @@ def add_new(name, category_id, price, summary, characteristic, path):
     return product
 
 
-def update(product, name, category_id, price, summary, characteristic, path):
+def update(product, name, category_id, price, summary, characteristic, image_url):
     product.name = name
     product.category_id = category_id
     product.price = price
     product.summary = summary
     product.characteristic = characteristic
-    product.path = path
+    product.image_url = image_url
     db.session.add(product)
     db.session.commit()
     return True

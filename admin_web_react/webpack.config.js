@@ -5,13 +5,13 @@ module.exports = {
   mode:'development',
     entry: "./app/app.jsx", // входная точка - исходный файл
     output:{
-        path: path.resolve(__dirname, './public'),
-        publicPath: '/public/',
-        filename: "bundle.js"
-        // path: path.resolve(__dirname, './public/js/'),     // путь к каталогу выходных файлов - папка public
-        // publicPath: 'https://science-project.ru/js/',
-        // filename: '[name].[contenthash].js',// название создаваемого файла
-        // clean: true,    
+        // path: path.resolve(__dirname, './public'),
+        // publicPath: '/public/',
+        // filename: "bundle.js"
+        path: path.resolve(__dirname, './public/js/'),     // путь к каталогу выходных файлов - папка public
+        publicPath: 'http://localhost:8080/js/',
+        filename: '[name].[contenthash].js',// название создаваемого файла
+        clean: true,
     },
     devServer: {
      historyApiFallback: true,

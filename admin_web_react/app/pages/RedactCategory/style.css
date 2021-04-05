@@ -1,0 +1,68 @@
+.redactCategory{
+    border-radius: 6px;
+    box-shadow: 0 16px 38px -12px rgb(0 0 0 / 56%), 0 4px 25px 0px rgb(0 0 0 / 12%), 0 8px 10px -5px rgb(0 0 0 / 20%);
+    background-color: #50384f;
+    padding: 20px;
+    margin: 30px auto;
+    margin-bottom: 0;
+    color : #ecbf7f;
+    width: 450px;
+}
+
+.h2{
+    margin: 0px 0px 15px 0px;
+}
+
+.categoryBlock{
+    font-size: 16px;
+    position: relative;
+}
+
+.categoryDescription{
+    font-size: 18px;
+    margin: 0;
+    margin-top: 15px;
+}
+
+.choosenCategory,
+.nillValue{
+    padding: 5px 0;
+    margin-top: 0px;
+    color: #cd851e;
+}
+
+.nillValue{
+    padding: 0;
+    margin: 0;
+}
+
+.nillBlock{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.nillDiscription{
+    margin: 0;
+    margin-right: 5px;
+}
+
+.error{
+    transition: 0.5s;
+    color: red;
+    animation-name: errorMove;
+    animation-duration: 0.5s;
+}
+
+@keyframes errorMove{
+    0%, 100%{
+        transform: translateX(0);
+    }
+    15% ,45%,75%{
+        transform: translateX(3px);
+    }
+    30%, 60%, 90%{
+        transform: translateX(-3px);
+    }
+}

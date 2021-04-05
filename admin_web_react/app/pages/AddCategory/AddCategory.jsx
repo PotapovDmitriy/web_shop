@@ -24,7 +24,7 @@ export default class AddCategory extends Component {
     }
 
     componentDidMount(){
-        axios.get('http://localhost:8010/categories')
+        axios.get('http://localhost:8010/categories', {withCredentials:true})
         .then((res)=>{
             this.setState({
                 categories : res.data.categories.filter((category)=>{
@@ -57,8 +57,7 @@ export default class AddCategory extends Component {
                 parent_id : (this.state.choosenCategory)?this.state.choosenCategory.category_id:null,
                 isNil : this.nillRef.current.checked
             };
-            console.log(data);
-            axios.post('http://localhost:8010/categories', data)
+            axios.post('http://localhost:8010/new_category', data, {withCredentials:true})
             .then((res)=>{
                 const { history } = this.props;
                 history.push('/all_categories');
@@ -110,7 +109,7 @@ export default class AddCategory extends Component {
                         <p className={styles.nillDiscription}>Final category: </p>
                         <input type='checkbox' className={styles.checkBox} ref={this.nillRef}/>
                     </div>
-                    <Button value='Create' onClick={this.createCategory}></Button>
+                    <Button value='Create' onClick={this.createCategory} bgColor='#d58520'></Button>
                 </div>
                 :<Load/>}
             </div>

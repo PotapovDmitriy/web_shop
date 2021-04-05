@@ -4,8 +4,9 @@ import styles from './style.css'
 
 export default class Button extends Component {
     render() {
+        let bgColor = {backgroundColor : this.props.bgColor}
         return (
-            <button className={styles.button} onClick={this.props.onClick}>{this.props.value.toUpperCase()}</button>
+            <button className={styles.button} onClick={this.props.onClick} style={bgColor}>{this.props.value.toUpperCase()}</button>
         )
     }
 }

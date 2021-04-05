@@ -7,6 +7,10 @@ import styles from './style.css'
 import Home from './pages/Home/Home.jsx'
 import AddCategory from './pages/AddCategory/AddCategory.jsx';
 import AddProduct from './pages/AddProduct/AddProduct.jsx';
+import AllCategories from './pages/AllCategories/AllCategories.jsx';
+import RedactCategory from './pages/RedactCategory/RedactCategory.jsx';
+import RedactProduct from './pages/RedactProduct/RedactProduct.jsx';
+import AllProducts from './pages/AllProducts/AllProducts.jsx';
  
 ReactDOM.render(
     <div className={styles.app}>
@@ -38,6 +42,10 @@ ReactDOM.render(
                 <Route exact path='/' component={Home}></Route>
                 <Route exact path='/new_category' component={AddCategory}></Route>
                 <Route exact path='/new_product' component={AddProduct}></Route>
+                <Route exact path='/all_categories' component={AllCategories}></Route>
+                <Route exact path='/all_categories/:id' component={(props)=><RedactCategory {...props}/>}></Route>
+                <Route exact path='/all_products' component={AllProducts}></Route>
+                <Route exact path='/all_products/:id' component={(props)=><RedactProduct {...props}/>}></Route>
             </Switch>
         </Router>
     </div>,

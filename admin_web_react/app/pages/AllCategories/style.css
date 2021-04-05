@@ -1,0 +1,48 @@
+.allCategories{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.oneCategory{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #50384f;
+    margin: 10px 20px;
+    border-radius: 6px;
+    padding: 10px;
+}
+
+.allTextlocks{
+    display: flex;
+    flex-direction: row;
+}
+
+.textBlock{
+    display: flex;
+    flex-direction: column;
+    margin: 0px 20px 0px 10px;
+}
+
+.textTitle{
+    color : #ecbf7f;
+    margin: 0;
+    font-size: 18px;
+}
+
+.textValue{
+    color: #cd851e;
+    margin: 0;
+    font-size: 16px;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: row;
+    justify-self: flex-end;
+    height: max-content;
+    width: 220px;
+    justify-content: space-between;
+}

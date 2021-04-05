@@ -11,7 +11,8 @@ export default class Textarea extends Component {
                 <textarea className={classnames(styles.textarea, this.props.className)}
                     placeholder={this.props.placeholder}
                     onChange={(e)=>{this.props.onChange(e)}}
-                    id={this.props.id}/>
+                    id={this.props.id}
+                    value={this.props.value}/>
             </div>
             
         )

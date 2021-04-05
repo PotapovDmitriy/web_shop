@@ -17,10 +17,14 @@ class Category(db.Model):
         self.nil = nil
 
     def to_json(self):
+        parent = self.get_parent()
+        parent_name = None
+        if parent is not None:
+            parent_name = parent.name
         return {
             "category_id": self.id,
             "name": self.name,
-            "parent_name": self.get_parent(),
+            "parent_name": parent_name,
             "isNil": self.nil
         }
 
