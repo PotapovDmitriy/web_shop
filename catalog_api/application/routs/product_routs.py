@@ -46,7 +46,7 @@ def get_product():
     try:
         product_id = request.args.get("id")
         product = product_repository.get_product_by_id(product_id)
-        return product.to_json()
+        return product if product is not None else {}
     except Exception as ex:
         return ({
                     'ERROR': str(ex)
@@ -58,7 +58,7 @@ def delete_product():
     try:
         product_id = request.args.get("id")
         product_repository.product_delete(product_id)
-        return {"msg":True}
+        return {"msg": True}
     except Exception as ex:
         return ({
                     'ERROR': str(ex)
@@ -75,4 +75,3 @@ def redact_product():
         return ({
                     'ERROR': str(ex)
                 }, 400)
-

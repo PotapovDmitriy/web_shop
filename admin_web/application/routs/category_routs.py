@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 
 from ..database import db
 from ..repository import category_repository
+from ..messages import message
 
 category_routs = Blueprint('category_routs', __name__)
 
@@ -18,8 +19,8 @@ def create_category():
                 if parent.nil:
                     return {"msg": "Parent can not be nil!"}
             is_nil = json_body['isNil']
-            category_repository.add_new(name, parent_id, is_nil)
-
+            new_category = category_repository.add_new(name, parent_id, is_nil)
+            message.send_message_for_item(new_category.to_json(), 1)
             return {"msg": True}
     except Exception as ex:
         return ({
@@ -60,7 +61,7 @@ def get_category():
         db.session.close()
 
 
-@category_routs.route('/delete_category ', methods=['GET'])
+@category_routs.route('/delete_category', methods=['GET'])
 def delete_category():
     try:
         category_id = request.args.get("id")
@@ -69,8 +70,9 @@ def delete_category():
             return {
                 "msg": "can not be deleted, have children"
             }
-
-        return {"msg": category_repository.delete(category)}
+        msg = category_repository.delete(category)
+        message.send_message_for_item({"id": category_id}, 5)
+        return {"msg": msg}
     except Exception as ex:
         return ({
                     'ERROR': str(ex)
@@ -96,7 +98,10 @@ def redact_category():
                 return {"msg": "Parent can not be nil!"}
 
         if category.can_be_nil() and is_nil:
-            return category_repository.update(category, name, parent_id, is_nil)
+            updated_category = category_repository.update(category, name, parent_id, is_nil)
+
+            message.send_message_for_item(updated_category.to_json(), 3)
+            return str(True)
         else:
             return {'msg': "Category cant be nil"}
     except Exception as ex:

@@ -34,7 +34,7 @@ def create_product():
         path = json_body['image_url']
 
         new_product = product_repository.add_new(name, category_id, price, summary, characteristic, path)
-        message.send_message_for_create_product(new_product.to_json())
+        message.send_message_for_item(new_product.to_json(), 2)
         return {"msg": True}
 
     except Exception as ex:
@@ -80,7 +80,9 @@ def delete_product():
     try:
         product_id = request.args.get("id")
         product = product_repository.get_by_id(product_id)
-        return {"msg":product_repository.delete(product)}
+        msg = product_repository.delete(product)
+        message.send_message_for_item({"id": product_id}, 6)
+        return {"msg": msg}
     except Exception as ex:
         return ({
                     'ERROR': str(ex)
@@ -103,7 +105,9 @@ def redact_product():
         summary = json_body['summary']
         characteristic = json_body['characteristic']
         path = json_body['image_url']
-        return {"msg": product_repository.update(product, name, category_id, price, summary, characteristic, path)}
+        updated_product = product_repository.update(product, name, category_id, price, summary, characteristic, path)
+        message.send_message_for_item(updated_product.to_json(), 4)
+        return {"msg": True}
     except Exception as ex:
         return ({
                     'ERROR': str(ex)

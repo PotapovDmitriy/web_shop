@@ -20,7 +20,8 @@ class Category(db.Model):
         return {
             "category_id": self.id,
             "name": self.name,
-            "parent_name": self.get_parent(),
+            "parent_name": self.get_parent().name if self.get_parent() is not None else None,
+            "parent_category_id": self.parent_category_id,
             "isNil": self.nil
         }
 

@@ -19,8 +19,10 @@ def update(product, name, category_id, price, summary, characteristic, path):
     product.characteristic = characteristic
     product.path = path
     db.session.add(product)
+    db.session.flush()
+    db.session.refresh(product)
     db.session.commit()
-    return True
+    return product
 
 
 def get_by_id(product_id):

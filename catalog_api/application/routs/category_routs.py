@@ -18,7 +18,7 @@ def create_category():
 
 
 @category_routs.route('/root_categories', methods=['GET'])
-def get_categories():
+def get_root_categories():
     try:
         all_categories = category_repository.get_all_root_category()
         return {"categories": all_categories}
@@ -29,7 +29,7 @@ def get_categories():
 
 
 @category_routs.route('/children_categories', methods=['GET'])
-def get_categories():
+def get_children_categories():
     try:
         category_id = request.args.get("category_id")
         all_categories = category_repository.get_all_children_category(category_id)
@@ -46,7 +46,7 @@ def get_category():
         category_id = request.args.get("id")
         category_json = category_repository.get_category_by_id(category_id)
 
-        return category_json
+        return category_json if category_json else {"msg": "Empty"}
     except Exception as ex:
         return ({
                     'ERROR': str(ex)
