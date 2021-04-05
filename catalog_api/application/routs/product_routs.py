@@ -1,5 +1,6 @@
 from flask import Blueprint, request
 from ..repository import product_repository
+import json
 
 product_routs = Blueprint('product_routs', __name__)
 

@@ -9,16 +9,16 @@ def category_update(update_category) -> None:
     categories_collection.update({"category_id": update_category["category_id"]}, update_category)
 
 
-def category_delete(remove_category) -> None:
-    categories_collection.remove({"category_id": remove_category["category_id"]})
+def category_delete(category_id) -> None:
+    categories_collection.remove({"category_id": category_id})
 
 
 def get_category_by_id(category_id) -> {}:
-    return categories_collection.find_one({"category_id": category_id}, {"_id": 0})
+    return categories_collection.find_one({"category_id": category_id})
 
 
 def get_all_root_category() -> []:
-    results = categories_collection.find({"parent_category_id": None}, {"_id": 0})
+    results = categories_collection.find({"parent_category_id": None})
     return [r for r in results]
 
 

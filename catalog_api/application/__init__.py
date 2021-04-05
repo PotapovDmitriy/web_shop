@@ -6,6 +6,7 @@ sys.path.append("../..")
 
 def create_app(config_name):
     app = Flask(__name__)
+    # app.config["MONGO_URI"] = 'mongodb://admin:root@db_mongo:27017/test'
 
     app.secret_key = "123456"
 
