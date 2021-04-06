@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-
+from flask_cors import cross_origin
 from ..database import db
 from ..repository import category_repository
 from ..messages import message
@@ -8,6 +8,7 @@ category_routs = Blueprint('category_routs', __name__)
 
 
 @category_routs.route('/new_category', methods=['POST'])
+@cross_origin(supports_credentials=True)
 def create_category():
     try:
         if request.method == "POST":
@@ -31,6 +32,7 @@ def create_category():
 
 
 @category_routs.route('/categories', methods=['GET'])
+@cross_origin(supports_credentials=True)
 def get_categories():
     try:
         all_categories = category_repository.get_all()
@@ -47,6 +49,7 @@ def get_categories():
 
 
 @category_routs.route('/category', methods=['GET'])
+@cross_origin(supports_credentials=True)
 def get_category():
     try:
         category_id = request.args.get("id")
@@ -62,6 +65,7 @@ def get_category():
 
 
 @category_routs.route('/delete_category', methods=['GET'])
+@cross_origin(supports_credentials=True)
 def delete_category():
     try:
         category_id = request.args.get("id")
@@ -82,13 +86,12 @@ def delete_category():
 
 
 @category_routs.route('/redact_category', methods=['POST'])
+@cross_origin(supports_credentials=True)
 def redact_category():
     try:
         json_body = request.json
         category_id = json_body['category_id']
         name = json_body['name']
-        is_nil = json_body['isNil']
-        # Вот тут надо подумать, принимать название категории или ее id
         parent_category_id = json_body['parent_category_id']
         category = category_repository.get_by_id(category_id)
         if parent_category_id:

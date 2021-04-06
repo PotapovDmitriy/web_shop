@@ -1,0 +1,51 @@
+.app{
+    font-family: 'Oswald', sans-serif;
+    background-color: #ecbf80;
+    min-height: 100vh;
+    height: max-content;
+    padding-bottom: 50px;
+}
+
+.header{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+}
+
+.siteName,
+.siteDistrict{
+    color: #735a6a;
+    text-align: center;
+    font-size: 70px;
+    margin: 0;
+}
+
+.siteDistrict{
+    font-size: 35px;
+    color: #50384f;
+}
+
+.navigationBar{
+    background-color: #735a6a;
+    border-radius: 6px;
+    padding: 10px 15px;
+    margin-top: 15px;
+}
+.compareLinks{
+    display: flex;
+    flex-direction: row;
+    width: max-content;
+    margin: 0 auto;
+}
+
+.navLink{
+    display: flex;
+    padding: 0 15px;
+    border-radius: 6px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.navLinkActive{
+    background-color: #ffffff1a;
+}

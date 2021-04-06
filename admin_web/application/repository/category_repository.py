@@ -11,10 +11,10 @@ def add_new(name, parent_id, is_nil):
     return category
 
 
-def update(category, new_name, new_parent_category, is_nil):
+def update(category, new_name):
     category.name = new_name
-    category.parent_category_id = new_parent_category
-    category.nil = is_nil
+    # category.parent_category_id = new_parent_category
+    # category.nil = is_nil
     db.session.add(category)
     db.session.flush()
     db.session.refresh(category)

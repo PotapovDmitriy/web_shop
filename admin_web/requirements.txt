@@ -3,4 +3,4 @@ flask_sqlalchemy
 pymysql
 cryptography
 pika
-psycopg2
+flask_cors

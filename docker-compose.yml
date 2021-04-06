@@ -14,7 +14,7 @@ services:
       - "5432:3306"
     volumes:
       - db_data:/var/lib/mysql
-    networks:
+    networks: 
       - admin_api
       - db
   mongo-express:
@@ -101,10 +101,20 @@ services:
       MYSQL_DATABASE: database
       MYSQL_USER: user-1
       MYSQL_PASSWORD: user-1
-    networks:
-      - admin_api
+    networks: 
       - db
       - rabbit
+      - admin_web
+  admin_web:
+    container_name: admin_web
+    build: 
+      context: ./admin_web_react
+      dockerfile: Dockerfile
+    ports: 
+      - 8080:80
+    networks: 
+      - admin_web
+      - admin_api
   catalog_api:
     container_name: catalog_api
     build:
@@ -132,3 +142,4 @@ networks:
   rabbit:
   mongo:
   mongo-ex:
+  admin_web:

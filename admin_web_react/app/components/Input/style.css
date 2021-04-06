@@ -1,0 +1,25 @@
+.inputBlock{
+    display: flex;
+    flex-direction: column;
+    color: #ecbf7f;
+}
+
+.label{
+    font-size: 18px;
+}
+
+.input{
+    font-family: 'Oswald', sans-serif;
+    background-color: transparent;
+    border: transparent;
+    color: #cd851e;
+    outline: none;
+    border-bottom: 1px solid #fff;
+    padding: 5px 0px;
+    font-size: 16px;
+}
+
+.input::placeholder{
+    color: #cd851e;
+    font-size: 16px;
+}
