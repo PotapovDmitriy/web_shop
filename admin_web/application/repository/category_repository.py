@@ -3,8 +3,12 @@ from ..models.category import Category
 
 
 def add_new(name, parent_id, is_nil):
-    db.session.add(Category(name, parent_id, is_nil))
+    category = Category(name, parent_id, is_nil)
+    db.session.add(category)
+    db.session.flush()
+    db.session.refresh(category)
     db.session.commit()
+    return category
 
 
 def update(category, new_name):
@@ -12,8 +16,10 @@ def update(category, new_name):
     # category.parent_category_id = new_parent_category
     # category.nil = is_nil
     db.session.add(category)
+    db.session.flush()
+    db.session.refresh(category)
     db.session.commit()
-    return True
+    return category
 
 
 def get_by_id(cat_id):

@@ -19,8 +19,10 @@ def update(product, name, category_id, price, summary, characteristic, image_url
     product.characteristic = characteristic
     product.image_url = image_url
     db.session.add(product)
+    db.session.flush()
+    db.session.refresh(product)
     db.session.commit()
-    return True
+    return product
 
 
 def get_by_id(product_id):

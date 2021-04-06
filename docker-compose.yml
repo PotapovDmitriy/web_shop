@@ -17,23 +17,51 @@ services:
     networks: 
       - admin_api
       - db
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - "8081:8081"
+    depends_on:
+      mongo:
+        condition: service_started
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+    networks:
+      - mongo-ex
+      - mongo
   mongo:
     container_name: db_mongo
     image: mongo
+    command: mongod --auth
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: admin
     ports:
       - "27017:27017"
     volumes:
       - mongovolume:/data/db
+    networks:
+      - mongo-ex
+      - mongo
+      - catalog
   consumer:
     container_name: consumer
     restart: on-failure
     build:
       context: ./consumer
       dockerfile: Dockerfile
+    links:
+      - catalog_api
+      - admin_api
     depends_on:
+      - rabbit
+    networks:
+      - admin_api
+      - consumer
+      - catalog
       - rabbit
   rabbit:
     container_name: dev_rabbit
@@ -50,6 +78,9 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+    networks:
+      - consumer
+      - rabbit
   admin_api:
     container_name: admin_api
     build:
@@ -63,6 +94,7 @@ services:
       - db
     depends_on:
       - db
+      - rabbit
     environment:
       APP_ID: 1
       MYSQL_ROOT_PASSWORD: root
@@ -70,8 +102,9 @@ services:
       MYSQL_USER: user-1
       MYSQL_PASSWORD: user-1
     networks: 
-      - admin_api
       - db
+      - rabbit
+      - admin_web
   admin_web:
     container_name: admin_web
     build: 
@@ -88,13 +121,25 @@ services:
       context: ./catalog_api
       dockerfile: Dockerfile
     ports:
-      - 8020:5000
+      - 8020:5010
+    depends_on:
+      - mongo
+      - rabbit
     volumes:
       - ./app:/app
+    networks:
+      - consumer
+      - catalog
+      - mongo
 volumes:
   db_data: { }
   mongovolume:
-networks: 
-  admin_web:
+networks:
   admin_api:
   db:
+  consumer:
+  catalog:
+  rabbit:
+  mongo:
+  mongo-ex:
+  admin_web:

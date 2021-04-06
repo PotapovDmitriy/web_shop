@@ -17,14 +17,11 @@ class Category(db.Model):
         self.nil = nil
 
     def to_json(self):
-        parent = self.get_parent()
-        parent_name = None
-        if parent is not None:
-            parent_name = parent.name
         return {
             "category_id": self.id,
             "name": self.name,
-            "parent_name": parent_name,
+            "parent_name": self.get_parent().name if self.get_parent() is not None else None,
+            "parent_category_id": self.parent_category_id,
             "isNil": self.nil
         }
 
@@ -41,4 +38,4 @@ class Category(db.Model):
         return db.session.query(Category).get(self.parent_category_id)
 
     def can_be_nil(self):
-        return len(self.get_children_if_exist()) == 0
+        return len(self.get_children_if_exist()) != 0
