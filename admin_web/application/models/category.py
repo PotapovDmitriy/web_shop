@@ -38,4 +38,4 @@ class Category(db.Model):
         return db.session.query(Category).get(self.parent_category_id)
 
     def can_be_nil(self):
-        return len(self.get_children_if_exist()) == 0
+        return len(self.get_children_if_exist()) != 0

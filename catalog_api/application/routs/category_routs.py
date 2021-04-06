@@ -31,7 +31,7 @@ def get_root_categories():
 @category_routs.route('/children_categories', methods=['GET'])
 def get_children_categories():
     try:
-        category_id = request.args.get("category_id")
+        category_id = int(request.args.get("category_id"))
         all_categories = category_repository.get_all_children_category(category_id)
         return {"categories": all_categories}
     except Exception as ex:
@@ -43,7 +43,7 @@ def get_children_categories():
 @category_routs.route('/category', methods=['GET'])
 def get_category():
     try:
-        category_id = request.args.get("id")
+        category_id = int(request.args.get("id"))
         category_json = category_repository.get_category_by_id(category_id)
 
         return category_json if category_json else {"msg": "Empty"}
@@ -53,10 +53,10 @@ def get_category():
                 }, 400)
 
 
-@category_routs.route('/delete_category ', methods=['GET'])
+@category_routs.route('/delete_category', methods=['GET'])
 def delete_category():
     try:
-        category_id = request.args.get("id")
+        category_id = int(request.args.get("id"))
         category_repository.category_delete(category_id)
 
         return {"msg": True}
@@ -73,6 +73,18 @@ def redact_category():
 
         category_repository.category_update(json_body)
         return {'msg': True}
+    except Exception as ex:
+        return ({
+                    'ERROR': str(ex)
+                }, 400)
+
+
+@category_routs.route('/all_categories', methods=['GET'])
+def get_all_categories():
+    try:
+        category_json = category_repository.get_all_category()
+        data = {"categories": category_json}
+        return data if category_json else {"msg": "Empty"}
     except Exception as ex:
         return ({
                     'ERROR': str(ex)

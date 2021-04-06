@@ -13,6 +13,7 @@ def send_message_for_item(data, type_number):
     # connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
     # channel = connection.channel()
     # channel.queue_declare(queue="app_que")
+    print(str(data))
     channel.basic_publish(exchange='app_que_ex',
                           routing_key='app_que',
                           body=json.dumps({"type": type_number,

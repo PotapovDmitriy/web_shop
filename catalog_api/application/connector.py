@@ -5,7 +5,7 @@
 
 from pymongo import MongoClient
 
-client = MongoClient('localhost', 27017, username='root', password='root')
+client = MongoClient('db_mongo', 27017, username='root', password='root')
 
 db = client['ProductCatalog']
 

@@ -33,7 +33,7 @@ def callback(ch, method, properties, body):
         print(data)
         conn_str = "http://catalog_api:5010/delete_product?id=" + str(data["id"])
     if type_number > 4:
-        requests.post(conn_str, json=data)
+        requests.get(conn_str, json=data)
     else:
         requests.post(conn_str, json=data)
 

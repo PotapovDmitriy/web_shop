@@ -13,7 +13,7 @@ def create_category():
         if request.method == "POST":
             json_body = request.json
             name = json_body['name']
-            parent_id = json_body["parent_id"]
+            parent_id = json_body["parent_category_id"]
             if parent_id is not None:
                 parent = category_repository.get_by_id(parent_id)
                 if parent.nil:
@@ -89,21 +89,20 @@ def redact_category():
         name = json_body['name']
         is_nil = json_body['isNil']
         # Вот тут надо подумать, принимать название категории или ее id
-        parent_category_id = json_body['parent_id']
+        parent_category_id = json_body['parent_category_id']
         category = category_repository.get_by_id(category_id)
-        parent_id = None
         if parent_category_id:
             parent = category_repository.get_by_id(parent_category_id)
             if parent.nil:
                 return {"msg": "Parent can not be nil!"}
 
-        if category.can_be_nil() and is_nil:
-            updated_category = category_repository.update(category, name, parent_id, is_nil)
-
-            message.send_message_for_item(updated_category.to_json(), 3)
-            return str(True)
-        else:
+        if not category.can_be_nil() and is_nil:
             return {'msg': "Category cant be nil"}
+
+        updated_category = category_repository.update(category, name, parent_category_id, is_nil)
+
+        message.send_message_for_item(updated_category.to_json(), 3)
+        return str(True)
     except Exception as ex:
         return ({
                     'ERROR': str(ex)

@@ -33,7 +33,7 @@ def add_new_product():
 @product_routs.route('/products', methods=['GET'])
 def products():
     try:
-        category_id = request.args.get("category_id")
+        category_id = int(request.args.get("category_id"))
         all_products = product_repository.get_products_by_category_id(category_id)
         return {"products": all_products}
     except Exception as ex:
@@ -45,7 +45,7 @@ def products():
 @product_routs.route('/product', methods=['GET'])
 def get_product():
     try:
-        product_id = request.args.get("id")
+        product_id = int(request.args.get("id"))
         product = product_repository.get_product_by_id(product_id)
         return product if product is not None else {}
     except Exception as ex:
@@ -57,7 +57,7 @@ def get_product():
 @product_routs.route('/delete_product', methods=['GET'])
 def delete_product():
     try:
-        product_id = request.args.get("id")
+        product_id = int(request.args.get("id"))
         product_repository.product_delete(product_id)
         return {"msg": True}
     except Exception as ex:

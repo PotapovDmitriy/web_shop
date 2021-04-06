@@ -95,8 +95,8 @@ def delete_product():
 def redact_product():
     try:
         json_body = request.json
-        product_id = json_body.product_id
-        product = db.session.query(Product).get(product_id)
+        product_id = json_body["product_id"]
+        product = product_repository.get_by_id(product_id)
 
         name = json_body['name']
         category_id = json_body['category_id']
