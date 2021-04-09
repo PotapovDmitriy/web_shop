@@ -47,11 +47,11 @@ services:
       - mongo-ex
       - mongo
       - catalog
-  consumer:
-    container_name: consumer
+  catalog_consumer:
+    container_name: catalog_consumer
     restart: on-failure
     build:
-      context: ./consumer
+      context: catalog_api/consumer
       dockerfile: Dockerfile
     links:
       - catalog_api
@@ -118,7 +118,7 @@ services:
   catalog_api:
     container_name: catalog_api
     build:
-      context: ./catalog_api
+      context: ./catalog_api/catalog_backend
       dockerfile: Dockerfile
     ports:
       - 8020:5010

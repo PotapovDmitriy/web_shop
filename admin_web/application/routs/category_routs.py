@@ -92,6 +92,7 @@ def redact_category():
         json_body = request.json
         category_id = json_body['category_id']
         name = json_body['name']
+        is_nil = json_body['isNil']
         parent_category_id = json_body['parent_category_id']
         category = category_repository.get_by_id(category_id)
         if parent_category_id:
@@ -99,8 +100,9 @@ def redact_category():
             if parent.nil:
                 return {"msg": "Parent can not be nil!"}
 
-        if not category.can_be_nil() and is_nil:
-            return {'msg': "Category cant be nil"}
+        if category.nil != is_nil:
+            if not category.can_be_nil() and is_nil:
+                return {'msg': "Category cant be nil"}
 
         updated_category = category_repository.update(category, name, parent_category_id, is_nil)
 

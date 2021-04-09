@@ -1,7 +1,7 @@
 from flask import Flask
 import sys
 
-sys.path.append("../..")
+sys.path.append("../../..")
 
 
 def create_app(config_name):
@@ -9,11 +9,7 @@ def create_app(config_name):
     # app.config["MONGO_URI"] = 'mongodb://admin:root@db_mongo:27017/test'
 
     app.secret_key = "123456"
-
-    from .routs.product_routs import product_routs
     from .routs.category_routs import category_routs
-
-    app.register_blueprint(product_routs)
     app.register_blueprint(category_routs)
 
     return app

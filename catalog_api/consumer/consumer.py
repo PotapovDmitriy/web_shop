@@ -1,7 +1,6 @@
 import pika
-import requests
 import json
-from datetime import timedelta
+from handlers import catalog_handler, product_handler
 
 credentials = pika.PlainCredentials('user', 'user')
 connection = pika.BlockingConnection(pika.ConnectionParameters('rabbit', 5672, '/', credentials))
@@ -19,23 +18,17 @@ def callback(ch, method, properties, body):
     type_number = json_body['type']
     data = json_body['data']
     if type_number == 1:
-        conn_str = "http://catalog_api:5010/new_category"
+        catalog_handler.add_new_category(data)
     elif type_number == 2:
-        conn_str = "http://catalog_api:5010/new_product"
+        product_handler.add_new_product(data)
     elif type_number == 3:
-        conn_str = "http://catalog_api:5010/redact_category"
+        catalog_handler.update_category(data)
     elif type_number == 4:
-        conn_str = "http://catalog_api:5010/redact_product"
+        product_handler.update_product(data)
     elif type_number == 5:
-        print(data)
-        conn_str = "http://catalog_api:5010/delete_category?id=" + str(data["id"])
+        catalog_handler.delete_category(int(data["id"]))
     elif type_number == 6:
-        print(data)
-        conn_str = "http://catalog_api:5010/delete_product?id=" + str(data["id"])
-    if type_number > 4:
-        requests.get(conn_str, json=data)
-    else:
-        requests.post(conn_str, json=data)
+        product_handler.delete_product(int(data["id"]))
 
 
 channel.basic_consume(queue='app_que', on_message_callback=callback, auto_ack=True)
