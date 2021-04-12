@@ -14,7 +14,8 @@ services:
       - "5432:3306"
     volumes:
       - db_data:/var/lib/mysql
-    networks: 
+      - ./mysql/init:/docker-entrypoint-initdb.d
+    networks:
       - admin_api
       - db
   mongo-express:
@@ -101,18 +102,41 @@ services:
       MYSQL_DATABASE: database
       MYSQL_USER: user-1
       MYSQL_PASSWORD: user-1
-    networks: 
+    networks:
       - db
       - rabbit
       - admin_web
+  gateway_api:
+    container_name: gateway_api
+    build:
+      context: ./gateway_api
+      dockerfile: Dockerfile
+    ports:
+      - 8060:5020
+    volumes:
+      - ./app:/app
+    links:
+      - db
+    depends_on:
+      - db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: database
+      MYSQL_USER: user-1
+      MYSQL_PASSWORD: user-1
+    networks:
+      - db
+      - admin_web
+      - gateway_api
+      - catalog
   admin_web:
     container_name: admin_web
-    build: 
+    build:
       context: ./admin_web_react
       dockerfile: Dockerfile
-    ports: 
+    ports:
       - 8080:80
-    networks: 
+    networks:
       - admin_web
       - admin_api
   catalog_api:
@@ -131,6 +155,7 @@ services:
       - consumer
       - catalog
       - mongo
+      - gateway_api
 volumes:
   db_data: { }
   mongovolume:
@@ -143,3 +168,4 @@ networks:
   mongo:
   mongo-ex:
   admin_web:
+  gateway_api:

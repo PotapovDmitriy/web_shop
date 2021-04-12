@@ -18,7 +18,7 @@ def create_category():
             if parent_id is not None:
                 parent = category_repository.get_by_id(parent_id)
                 if parent.nil:
-                    return {"msg": "Parent can not be nil!"}
+                    return {"Error": "Parent can not be nil!"}
             is_nil = json_body['isNil']
             new_category = category_repository.add_new(name, parent_id, is_nil)
             message.send_message_for_item(new_category.to_json(), 1)
@@ -72,7 +72,7 @@ def delete_category():
         category = category_repository.get_by_id(category_id)
         if len(category.products) != 0 or len(category.get_children_if_exist()) != 0:
             return {
-                "msg": "can not be deleted, have children"
+                "Error": "can not be deleted, have children"
             }
         msg = category_repository.delete(category)
         message.send_message_for_item({"id": category_id}, 5)
@@ -98,11 +98,11 @@ def redact_category():
         if parent_category_id:
             parent = category_repository.get_by_id(parent_category_id)
             if parent.nil:
-                return {"msg": "Parent can not be nil!"}
+                return {"Error": "Parent can not be nil!"}
 
         if category.nil != is_nil:
             if not category.can_be_nil() and is_nil:
-                return {'msg': "Category cant be nil"}
+                return {'Error': "Category cant be nil"}
 
         updated_category = category_repository.update(category, name, parent_category_id, is_nil)
 

@@ -1,0 +1,6 @@
+flask==1.1.2
+flask_sqlalchemy
+pymysql
+cryptography
+flask_cors
+bcrypt

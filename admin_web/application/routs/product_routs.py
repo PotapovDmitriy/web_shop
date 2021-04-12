@@ -37,7 +37,7 @@ def create_product():
         characteristic = json_body['characteristic']
         path = json_body['image_url']
         if not category.nil:
-            return {"msg": "parent category should be nil"}
+            return {"Error": "parent category should be nil"}
         new_product = product_repository.add_new(name, category_id, price, summary, characteristic, path)
         message.send_message_for_item(new_product.to_json(), 2)
         return {"msg": True}
@@ -111,9 +111,9 @@ def redact_product():
         category_id = json_body['category_id']
         category = category_repository.get_by_id(category_id)
         if category is None:
-            return {"msg": "have no category"}
+            return {"Error": "have no category"}
         if not category.nil:
-            return {"msg": "parent category should be nil"}
+            return {"Error": "parent category should be nil"}
         price = json_body['price']
         summary = json_body['summary']
         characteristic = json_body['characteristic']
