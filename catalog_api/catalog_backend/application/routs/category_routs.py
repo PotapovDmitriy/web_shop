@@ -1,4 +1,5 @@
 from flask import Blueprint, request
+from flask_cors import cross_origin
 
 from ..repository import category_repository
 
@@ -6,6 +7,7 @@ category_routs = Blueprint('category_routs', __name__)
 
 
 @category_routs.route('/root_categories', methods=['GET'])
+@cross_origin(supports_credentials=True)
 def get_root_categories():
     try:
         all_categories = category_repository.get_all_root_category()
@@ -17,6 +19,7 @@ def get_root_categories():
 
 
 @category_routs.route('/children', methods=['GET'])
+@cross_origin(supports_credentials=True)
 def get_children_categories():
     try:
         category_id = int(request.args.get("category_id"))
@@ -29,6 +32,7 @@ def get_children_categories():
 
 
 @category_routs.route('/category', methods=['GET'])
+@cross_origin(supports_credentials=True)
 def get_category():
     try:
         category_id = int(request.args.get("id"))
