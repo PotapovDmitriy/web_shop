@@ -1,0 +1,31 @@
+.home{
+}
+
+.rootCategories{
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+    margin-top: 10px;
+    border: 1px solid #FFF;
+    border-radius: 6px;
+    padding: 10px;
+    width: max-content;
+}
+
+.link{
+    text-decoration: none;
+    color: white;
+}
+
+.link:hover{
+    color: teal;
+    transition: 0.5s ease-in-out;
+}
+
+.h3{
+    color: white;
+    margin: 10px 0;
+    margin-left: 15px;
+    margin-top: 0;
+    padding-top: 10px;
+}

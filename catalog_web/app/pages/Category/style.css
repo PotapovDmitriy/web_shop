@@ -1,0 +1,80 @@
+.h3{
+    margin: 10px 0;
+    margin-left: 15px;
+    color: white;
+}
+
+.childrenCategories{
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+    margin-top: 10px;
+    border: 1px solid #FFF;
+    border-radius: 6px;
+    padding: 10px;
+    width: max-content;
+}
+
+.link,.homeLink{
+    text-decoration: none;
+    color: white;
+}
+
+.link:hover,.homeLink:hover{
+    color: teal;
+    transition: 0.5s ease-in-out;
+}
+
+.homeLink{
+    margin-left: 15px;
+    margin-top: 10px;
+    font-size: 27px;
+    font-weight: 500;
+}
+
+.childrenProducts{
+    display: flex;
+    flex-direction: column;
+    margin: 0px 15px;
+    width: auto;
+}
+.product{
+    box-sizing: border-box;
+    border: 1px solid #FFF;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    justify-content: space-between;
+}
+
+.img{
+    width: 300px;
+    height: 200px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.description{
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+    max-width: 50%;
+}
+.flex{
+    display: flex;
+    flex-direction: row;
+}
+.description p,
+.noChildren{
+    margin: 10px 0px;
+    color: white;
+}
+
+.button{
+    border:1px solid #FFF;
+    border-radius: 6px;
+    padding: 5px;
+    width: max-content;
+    height: max-content;
+}

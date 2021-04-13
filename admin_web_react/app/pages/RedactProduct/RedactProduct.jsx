@@ -61,10 +61,11 @@ export default class RedactProduct extends Component {
             summary : this.state.newDescription,
             characteristic : this.state.newSpecification,
             image_url : this.state.newImage,
-            price : this.state.newPrice
+            price : this.state.newPrice,
+            product_id : this.state.product.product_id
         };
         console.log(data);
-        axios.post('http://localhost:8010/redact_product?id='+this.state.product.product_id, data, {withCredentials:true})
+        axios.post('http://localhost:8010/redact_product', data, {withCredentials:true})
         .then((res)=>{
             const { history } = this.props;
             history.push('/all_products');

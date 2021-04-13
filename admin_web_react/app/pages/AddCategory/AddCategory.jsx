@@ -54,7 +54,7 @@ export default class AddCategory extends Component {
         } else{
             let data = {
                 name : this.state.categoryName,
-                parent_id : (this.state.choosenCategory)?this.state.choosenCategory.category_id:null,
+                parent_category_id : (this.state.choosenCategory)?this.state.choosenCategory.category_id:null,
                 isNil : this.nillRef.current.checked
             };
             axios.post('http://localhost:8010/new_category', data, {withCredentials:true})
