@@ -2,7 +2,7 @@ from ..repository import user_repository, role_repository
 
 
 def authenticate(username, password):
-    user = user_repository.get_by_email(username)
+    user = user_repository.get_by_login(username)
     if user and user.check_password(password):
         return user
 

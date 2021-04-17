@@ -17,6 +17,18 @@ def create_tables():
         user_repository.add_new("Потапов", "Дмитрий", "Иванович", "root", "root", 1)
 
 
+@application.after_request
+def after_request_func(response):
+    res_data = response.json
+    try:
+        access_token = res_data['access_token']
+        response.headers['Authorization'] = "JWT " + access_token
+    except Exception as ex:
+        print(ex)
+    finally:
+        return response
+
+
 jwt = JWT(application, auth_service.authenticate, auth_service.identity)
 
 if __name__ == '__main__':

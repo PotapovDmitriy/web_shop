@@ -5,16 +5,15 @@ import json
 from flask_jwt import JWT, jwt_required, current_identity
 
 admin_routs = Blueprint('admin_routs', __name__)
-ADMIN_API = "http://localhost:8010/"
+ADMIN_API = "http://admin_api:5000/"
 
 
 @admin_routs.before_request
 @jwt_required()
 def before_request():
     user = current_identity
-    req = request
     if user.role_id != 1:
-        return {"msg" : "you have no permission for this"}
+        return {"msg": "you have no permission for this"}
 
 
 @admin_routs.route('/new_category', methods=['POST'])
@@ -23,7 +22,7 @@ def before_request():
 def create_category():
     try:
         json_body = request.json
-        answer = requests.post(ADMIN_API + "new_category", data=json_body)
+        answer = requests.post(ADMIN_API + "new_category", json=json_body)
         return json.loads(answer.text)
     except Exception as ex:
         return ({
@@ -50,7 +49,7 @@ def get_categories():
 def get_category():
     try:
         category_id = request.args.get("id")
-        answer = requests.get(ADMIN_API + "category", id=category_id)
+        answer = requests.get(ADMIN_API + "category?id=" + str(category_id))
         return json.loads(answer.text)
     except Exception as ex:
         return ({
@@ -64,7 +63,7 @@ def get_category():
 def delete_category():
     try:
         category_id = request.args.get("id")
-        answer = requests.get(ADMIN_API + "delete_category", id=category_id)
+        answer = requests.get(ADMIN_API + "delete_category?id=" + str(category_id))
         return json.loads(answer.text)
     except Exception as ex:
         return ({
@@ -78,8 +77,8 @@ def delete_category():
 def redact_category():
     try:
         json_body = request.json
-        answer = requests.post(ADMIN_API + "redact_category", data=json_body)
-        return json.loads(answer.text)
+        answer = requests.post(ADMIN_API + "redact_category", json=json_body)
+        return str(answer.text)
     except Exception as ex:
         return ({
                     'ERROR': str(ex)
@@ -92,7 +91,7 @@ def redact_category():
 def create_product():
     try:
         json_body = request.json
-        answer = requests.post(ADMIN_API + "new_product", data=json_body)
+        answer = requests.post(ADMIN_API + "new_product", json=json_body)
         return json.loads(answer.text)
     except Exception as ex:
         return ({
@@ -118,7 +117,7 @@ def products():
 def get_product():
     try:
         product_id = request.args.get("id")
-        answer = requests.get(ADMIN_API + "product", id=product_id)
+        answer = requests.get(ADMIN_API + "product?id="+str(product_id))
         return json.loads(answer.text)
     except Exception as ex:
         return ({
@@ -132,7 +131,7 @@ def get_product():
 def delete_product():
     try:
         product_id = request.args.get("id")
-        answer = requests.get(ADMIN_API + "delete_product", id=product_id)
+        answer = requests.get(ADMIN_API + "delete_product?id=" + str(product_id))
         return json.loads(answer.text)
     except Exception as ex:
         return ({
@@ -146,7 +145,7 @@ def delete_product():
 def redact_product():
     try:
         json_body = request.json
-        answer = requests.post(ADMIN_API + "redact_product", data=json_body)
+        answer = requests.post(ADMIN_API + "redact_product", json=json_body)
         return json.loads(answer.text)
     except Exception as ex:
         return ({

@@ -12,14 +12,14 @@ class User(db.Model):
     first_name = db.Column(db.String(200), unique=False, nullable=False)
     second_name = db.Column(db.String(250), unique=False, nullable=False)
     third_name = db.Column(db.String(200), unique=False, nullable=False)
-    email = db.Column(db.String(300), unique=True, nullable=True)
+    login = db.Column(db.String(300), unique=True, nullable=True)
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'))
 
-    def __init__(self, second_name, first_name, third_name, password, email, role_id):
+    def __init__(self, second_name, first_name, third_name, password, login, role_id):
         self.first_name = first_name
         self.second_name = second_name
         self.third_name = third_name
-        self.email = email
+        self.login = login
         self.role_id = role_id
         self.set_hash_ps(password)
 

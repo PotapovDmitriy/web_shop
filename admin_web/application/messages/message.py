@@ -19,5 +19,15 @@ def send_message_for_item(data, type_number):
                           body=json.dumps({"type": type_number,
                                            "data": data}))
 
+    channel.exchange_declare(exchange='app_que_ex_cart',
+                             exchange_type='fanout')
+
+    # channel.queue_declare(queue="app_que_cart")
+    if type_number == 4 or type_number == 6:
+        channel.basic_publish(exchange='app_que_ex_cart',
+                              routing_key='cart_que',
+                              body=json.dumps({"type": type_number,
+                                               "data": data}))
+
     print(" [x] Sent text for update key words in project")
     connection.close()

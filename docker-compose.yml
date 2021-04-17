@@ -61,7 +61,23 @@ services:
       - rabbit
     networks:
       - admin_api
-      - consumer
+      - catalog_consumer
+      - catalog
+      - rabbit
+  cart_consumer:
+    container_name: cart_consumer
+    restart: on-failure
+    build:
+      context: cart_api/consumer
+      dockerfile: Dockerfile
+    links:
+      - cart_api
+      - admin_api
+    depends_on:
+      - rabbit
+    networks:
+      - admin_api
+      - cart_consumer
       - catalog
       - rabbit
   rabbit:
@@ -80,8 +96,9 @@ services:
       timeout: 10s
       retries: 5
     networks:
-      - consumer
+      - catalog_consumer
       - rabbit
+      - cart_consumer
   admin_api:
     container_name: admin_api
     build:
@@ -152,7 +169,24 @@ services:
     volumes:
       - ./app:/app
     networks:
-      - consumer
+      - catalog_consumer
+      - catalog
+      - mongo
+      - gateway_api
+  cart_api:
+    container_name: cart_api
+    build:
+      context: ./cart_api/cart_backend
+      dockerfile: Dockerfile
+    ports:
+      - 7020:5015
+    depends_on:
+      - mongo
+      - rabbit
+    volumes:
+      - ./app:/app
+    networks:
+      - cart_consumer
       - catalog
       - mongo
       - gateway_api
@@ -162,10 +196,12 @@ volumes:
 networks:
   admin_api:
   db:
-  consumer:
+  catalog_consumer:
   catalog:
   rabbit:
   mongo:
   mongo-ex:
   admin_web:
   gateway_api:
+  cart_api:
+  cart_consumer:
