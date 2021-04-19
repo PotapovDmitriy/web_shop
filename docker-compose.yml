@@ -175,6 +175,16 @@ services:
       - catalog
       - mongo
       - gateway_api
+  catalog_web:
+    container_name: catalog_web
+    build:
+      context: ./catalog_web
+      dockerfile: Dockerfile
+    ports:
+      - 8090:90
+    networks:
+      - catalog_web
+      - catalog
   cart_api:
     container_name: cart_api
     build:
@@ -194,6 +204,7 @@ services:
       - cart_api
       - gateway_api
       - admin_api
+
 volumes:
   db_data: { }
   mongovolume:
@@ -207,5 +218,7 @@ networks:
   mongo-ex:
   admin_web:
   gateway_api:
+  catalog_web:
   cart_api:
   cart_consumer:
+
