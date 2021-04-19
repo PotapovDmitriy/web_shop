@@ -1,8 +1,3 @@
-# from flask_pymongo import PyMongo
-#
-# mongo = PyMongo()
-
-
 from pymongo import MongoClient
 
 client = MongoClient('db_mongo', 27017, username='root', password='root')

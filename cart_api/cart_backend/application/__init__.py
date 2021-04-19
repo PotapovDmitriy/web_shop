@@ -9,7 +9,7 @@ def create_app(config_name):
     # app.config["MONGO_URI"] = 'mongodb://admin:root@db_mongo:27017/test'
 
     app.secret_key = "123456"
-    from .routs.cart_routs import category_routs
-    app.register_blueprint(category_routs)
+    from .routs.cart_routs import cart_routs
+    app.register_blueprint(cart_routs)
 
     return app

@@ -17,7 +17,6 @@ def callback(ch, method, properties, body):
     json_body = json.loads(body.decode())
     type_number = json_body['type']
     data = json_body['data']
-    print(str(data))
     if type_number == 4:
         cart_handler.update_product(data)
     elif type_number == 6:

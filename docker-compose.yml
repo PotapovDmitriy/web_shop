@@ -123,6 +123,7 @@ services:
       - db
       - rabbit
       - admin_web
+      - cart_api
   gateway_api:
     container_name: gateway_api
     build:
@@ -146,6 +147,7 @@ services:
       - admin_web
       - gateway_api
       - catalog
+      - cart_api
   admin_web:
     container_name: admin_web
     build:
@@ -189,7 +191,9 @@ services:
       - cart_consumer
       - catalog
       - mongo
+      - cart_api
       - gateway_api
+      - admin_api
 volumes:
   db_data: { }
   mongovolume:

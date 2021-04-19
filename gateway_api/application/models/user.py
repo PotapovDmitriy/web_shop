@@ -1,7 +1,6 @@
 import bcrypt
 
 from ..database import db
-import datetime
 
 
 class User(db.Model):
@@ -29,13 +28,13 @@ class User(db.Model):
     def get_full_name(self):
         return str(self.second_name) + " " + str(self.first_name) + " " + str(self.third_name)
 
-    def get_student_json(self):
+    def to_json(self):
         return {"user_id": self.id,
                 "first_name": self.first_name,
                 "second_name": self.second_name,
                 "third_name": self.third_name,
-                "email": self.email,
-                "login": self.login}
+                "login": self.login,
+                "role_id": self.role_id}
 
     def check_password(self, password):
         user_pass = str(self.password)
