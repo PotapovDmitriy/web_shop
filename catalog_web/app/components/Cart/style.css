@@ -1,0 +1,29 @@
+.cart{
+    position: fixed;
+    z-index: 1;
+    width: 100vw;
+}
+
+.cartButton{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100vw;
+}
+
+.cartWindow{
+    background-color: #00000075;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 14;
+}
+
+.cartForm{
+    background-color: white;
+    border-radius: 6px;
+    padding: 30px;
+}

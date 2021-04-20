@@ -3,3 +3,10 @@
     background-color: #0e1218;
     min-height: 100vh;
 }
+
+.logoutButton{
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    z-index: 16;
+}

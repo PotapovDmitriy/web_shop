@@ -1,4 +1,6 @@
 .home{
+    padding-top: 40px;
+    z-index: 2;
 }
 
 .rootCategories{

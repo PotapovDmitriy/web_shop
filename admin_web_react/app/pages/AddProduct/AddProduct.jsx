@@ -7,6 +7,7 @@ import Load from '../../components/Load/Load.jsx';
 import Input from '../../components/Input/Input.jsx';
 import Button from '../../components/Button/Button.jsx';
 import Textarea from '../../components/Textarea/Textarea.jsx';
+import {API_GETEWAY_HOST} from './../../app.jsx'
 
 export default class AddProduct extends Component {
     constructor(props) {
@@ -28,7 +29,7 @@ export default class AddProduct extends Component {
     }
 
     componentDidMount(){
-        axios.get('http://localhost:8010/categories', {withCredentials:true})
+        axios.get(API_GETEWAY_HOST+'categories', {withCredentials:true})
         .then((res)=>{
             this.setState({
                 categories : res.data.categories.filter((category)=>{
@@ -66,7 +67,7 @@ export default class AddProduct extends Component {
                 price : this.state.productPrice
             };
             console.log(data);
-            axios.post('http://localhost:8010/new_product', data, {withCredentials:true})
+            axios.post(API_GETEWAY_HOST+'new_product', data, {withCredentials:true})
             .then((res)=>{
                 const { history } = this.props;
                 history.push('/all_products');

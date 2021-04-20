@@ -5,14 +5,19 @@ import {API_HOST} from '../../app.jsx'
 import styles from './style.css'
 import Load from '../../components/Load/Load.jsx';
 import { Link } from 'react-router-dom';
+import LoginForm from '../../components/LoginForm/LoginForm.jsx';
 
 export default class Category extends Component {
     constructor(props) {
         super(props);
         
         this.state = {
-            category : undefined
-        }
+            category : undefined,
+            loginForm : null,
+            cart : []
+        };
+
+        this.addToCart = this.addToCart.bind(this);
     }
     
 
@@ -27,10 +32,33 @@ export default class Category extends Component {
             console.log(er);
         })
     }
+
+    addToCart(id){
+        if(!localStorage.getItem('jwt')){
+            this.setState({
+                loginForm : <LoginForm close={()=>{this.setState({loginForm:null})}}/>
+            })
+        }
+        else{
+            axios.get(API_HOST+'/add_product?product_id='+id, {withCredentials : true})
+            .then((res)=>{
+                let cart = this.state.cart;
+                cart.push(id);
+                this.setState({
+                    cart : cart
+                });
+            })
+            .catch((er)=>{
+                console.log(er);
+            })
+        }
+    }
+
     render() {
         return (
             <div>
                 <Link to='/' className={styles.homeLink}>Home</Link>
+                {this.state.loginForm}
                 {(this.state.category)
                 ?<div>
                     <h3 className={styles.h3}>{this.state.category.name}</h3>
@@ -50,7 +78,10 @@ export default class Category extends Component {
                                                     <p>{product.summary}</p>
                                                 </div>
                                             </div>
-                                            <button className={styles.button}>Add to cart</button>
+                                            {(!this.state.cart.includes(product.product_id))
+                                            ?<button className={styles.button} onClick={()=>{this.addToCart(product.product_id)}}>Add to cart</button>
+                                            :<button className={styles.button}>IN CART</button>}
+                                            
                                         </div>
                             })}
                         </div>

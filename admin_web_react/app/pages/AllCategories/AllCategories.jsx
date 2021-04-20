@@ -4,6 +4,7 @@ import axios from 'axios'
 import styles from './style.css'
 import Load from '../../components/Load/Load.jsx'
 import Button from '../../components/Button/Button.jsx';
+import {API_GETEWAY_HOST} from './../../app.jsx'
 
 export default class AllCategories extends Component {
     constructor(props) {
@@ -22,7 +23,7 @@ export default class AllCategories extends Component {
     }
     
     geyCategories(){
-        axios.get('http://localhost:8010/categories', {withCredentials:true})
+        axios.get(API_GETEWAY_HOST+'categories', {withCredentials:true})
         .then((res)=>{
             this.setState({
                 categories :res.data.categories
@@ -34,7 +35,7 @@ export default class AllCategories extends Component {
     }
 
     deleteCategory(id){
-        axios.get('http://localhost:8010/delete_category?id='+id, {withCredentials:true})
+        axios.get(API_GETEWAY_HOST+'delete_category?id='+id, {withCredentials:true})
         .then(()=>{
             console.log('Category delete');
             this.geyCategories();

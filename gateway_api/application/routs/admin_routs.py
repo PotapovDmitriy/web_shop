@@ -1,12 +1,11 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 import requests
-from flask_cors import cross_origin
+from flask_cors import cross_origin, CORS
 import json
 from flask_jwt import JWT, jwt_required, current_identity
 
 admin_routs = Blueprint('admin_routs', __name__)
 ADMIN_API = "http://admin_api:5000/"
-
 
 @admin_routs.before_request
 @jwt_required()
