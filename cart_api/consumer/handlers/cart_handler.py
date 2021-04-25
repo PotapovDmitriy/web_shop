@@ -15,8 +15,8 @@ def update_product(data):
                 old_product_price = product['price']
                 cart["full_price"] -= old_product_price
                 product['price'] = int(product['count']) * int(data["price"])
-                cart['full_price'] += product['price']
                 cart_repository.update_child(user_id, products_arr)
+                cart['full_price'] += int(product['count']) * int(data["price"])
                 cart_repository.cart_update(cart)
 
 
@@ -29,7 +29,7 @@ def delete_product(product_id):
             if product['product_id'] == product_id:
                 price = product["price"]
                 products_arr.remove(product)
-                cart['full_price'] -= price
                 cart_repository.update_child(user_id, products_arr)
+                cart['full_price'] -= price
                 cart_repository.cart_update(cart)
                 return True

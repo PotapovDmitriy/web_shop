@@ -3,9 +3,12 @@ from application.database import db
 from application.repository import role_repository, user_repository
 from application.service import auth_service
 from flask_jwt import JWT, jwt_required, current_identity
+from flask_cors import CORS
+from flask import request, make_response
 
 application = create_app('default')
 db.init_app(application)
+CORS(application, supports_credentials=True,allow_headers='*')
 
 
 @application.before_first_request
@@ -16,6 +19,11 @@ def create_tables():
         role_repository.add_new('user')
         user_repository.add_new("Потапов", "Дмитрий", "Иванович", "root", "root", 1)
 
+
+@application.before_request
+def before_request():
+    if request.method == "OPTIONS":
+        return make_response({'msg':True}, 204)
 
 @application.after_request
 def after_request_func(response):

@@ -7,6 +7,7 @@ import Input from '../../components/Input/Input.jsx';
 import Textarea from '../../components/Textarea/Textarea.jsx';
 import Button from '../../components/Button/Button.jsx';
 import Load from '../../components/Load/Load.jsx';
+import {API_GETEWAY_HOST} from './../../app.jsx'
 
 export default class RedactProduct extends Component {
     constructor(props) {
@@ -25,7 +26,7 @@ export default class RedactProduct extends Component {
     }
     
     componentDidMount(){
-        axios.get('http://localhost:8010/product?id='+ this.props.match.params.id, {withCredentials:true})
+        axios.get(API_GETEWAY_HOST +'product?id='+ this.props.match.params.id, {withCredentials:true})
         .then((res)=>{
             this.setState({
                 product : res.data,
@@ -65,7 +66,7 @@ export default class RedactProduct extends Component {
             product_id : this.state.product.product_id
         };
         console.log(data);
-        axios.post('http://localhost:8010/redact_product', data, {withCredentials:true})
+        axios.post(API_GETEWAY_HOST+'redact_product', data, {withCredentials:true})
         .then((res)=>{
             const { history } = this.props;
             history.push('/all_products');

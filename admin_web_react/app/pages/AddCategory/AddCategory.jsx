@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
 import Input from '../../components/Input/Input.jsx';
 import Load from '../../components/Load/Load.jsx';
 import styles from './style.css';
 import Button from '../../components/Button/Button.jsx';
+import {API_GETEWAY_HOST} from './../../app.jsx';
 
 export default class AddCategory extends Component {
     constructor(props) {
@@ -24,7 +24,8 @@ export default class AddCategory extends Component {
     }
 
     componentDidMount(){
-        axios.get('http://localhost:8010/categories', {withCredentials:true})
+        console.log(API_GETEWAY_HOST);
+        axios.get(API_GETEWAY_HOST+'categories', {withCredentials:true})
         .then((res)=>{
             this.setState({
                 categories : res.data.categories.filter((category)=>{
@@ -57,7 +58,7 @@ export default class AddCategory extends Component {
                 parent_category_id : (this.state.choosenCategory)?this.state.choosenCategory.category_id:null,
                 isNil : this.nillRef.current.checked
             };
-            axios.post('http://localhost:8010/new_category', data, {withCredentials:true})
+            axios.post(API_GETEWAY_HOST+'new_category', data, {withCredentials:true})
             .then((res)=>{
                 const { history } = this.props;
                 history.push('/all_categories');

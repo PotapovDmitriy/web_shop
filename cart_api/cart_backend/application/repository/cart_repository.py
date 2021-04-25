@@ -69,6 +69,7 @@ def get_count_minus_1(user_id, product_id) -> bool:
             product["price"] = int(price) * product['count']
             update_child(user_id, products_arr)
             cart["full_price"] -= price
+            cart_update(cart)
             return True
 
     return False

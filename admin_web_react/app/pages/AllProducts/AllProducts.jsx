@@ -4,6 +4,7 @@ import axios from 'axios'
 import styles from './style.css'
 import Button from '../../components/Button/Button.jsx';
 import Load from '../../components/Load/Load.jsx';
+import {API_GETEWAY_HOST} from './../../app.jsx'
 
 export default class AllProducts extends Component {
     constructor(props) {
@@ -22,7 +23,7 @@ export default class AllProducts extends Component {
     }
 
     getProducts(){
-        axios.get('http://localhost:8010/products', {withCredentials:true})
+        axios.get(API_GETEWAY_HOST+'products', {withCredentials:true})
         .then((res)=>{
             this.setState({
                 products :res.data.products
@@ -34,7 +35,7 @@ export default class AllProducts extends Component {
     }
 
     deleteProducts(id){
-        axios.get('http://localhost:8010/delete_product?id='+id, {withCredentials:true})
+        axios.get(API_GETEWAY_HOST+'delete_product?id='+id, {withCredentials:true})
         .then(()=>{
             console.log('Product delete');
             this.getProducts();

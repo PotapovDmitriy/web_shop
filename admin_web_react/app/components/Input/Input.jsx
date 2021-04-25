@@ -9,8 +9,7 @@ export default class Input extends Component {
             <div className={styles.inputBlock}>
                 <label htmlFor={this.props.id} className={classnames(styles.label, this.props.className)}>{this.props.label}</label>
                 <input id={this.props.id} 
-                    placeholder={this.props.placeholder} 
-                    type={this.props.type} 
+                    placeholder={this.props.placeholder}
                     className={classnames(styles.input, this.props.className)}
                     onChange={(e)=>{this.props.onChange(e)}}
                     value={this.props.value}

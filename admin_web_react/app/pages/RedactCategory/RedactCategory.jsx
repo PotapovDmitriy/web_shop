@@ -5,6 +5,7 @@ import styles from './style.css'
 import Load from '../../components/Load/Load.jsx';
 import Input from '../../components/Input/Input.jsx';
 import Button from '../../components/Button/Button.jsx';
+import {API_GETEWAY_HOST} from './../../app.jsx'
 
 export default class RedactCategory extends Component {
     constructor(props) {
@@ -19,7 +20,7 @@ export default class RedactCategory extends Component {
     }
 
     componentDidMount(){
-        axios.get('http://localhost:8010/category?id=' + this.props.match.params.id, {withCredentials:true})
+        axios.get(API_GETEWAY_HOST+'category?id=' + this.props.match.params.id, {withCredentials:true})
         .then((res)=>{
             this.setState({
                 category : res.data,
@@ -37,7 +38,7 @@ export default class RedactCategory extends Component {
                 name : this.state.newCategoryName,
                 category_id : this.props.match.params.id
             };
-            axios.post('http://localhost:8010/redact_category?id=' + this.props.match.params.id,data, {withCredentials:true})
+            axios.post(API_GETEWAY_HOST+'redact_category?id=' + this.props.match.params.id,data, {withCredentials:true})
             .then((res)=>{
                 console.log('Category update');
                 const { history } = this.props;
