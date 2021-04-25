@@ -8,6 +8,7 @@ cart_routs = Blueprint('cart_routs', __name__)
 
 CART_API = "http://cart_api:5015/"
 
+
 @cart_routs.before_request
 @jwt_required()
 def before_request():
@@ -38,7 +39,7 @@ def add_product():
     try:
         user_id = current_identity.id
         product_id = int(request.args.get("product_id"))
-        answer = requests.get(CART_API + "add_product?product_id=" + str(product_id) + "&user_id="+str(user_id))
+        answer = requests.get(CART_API + "add_product?product_id=" + str(product_id) + "&user_id=" + str(user_id))
         return json.loads(answer.text)
     except Exception as ex:
         return ({
@@ -69,6 +70,20 @@ def product_minus_one():
         user_id = current_identity.id
         product_id = int(request.args.get("product_id"))
         answer = requests.get(CART_API + "product_minus_one?product_id=" + str(product_id) + "&user_id=" + str(user_id))
+        return json.loads(answer.text)
+    except Exception as ex:
+        return ({
+                    'ERROR': str(ex)
+                }, 400)
+
+
+@cart_routs.route('/order', methods=['GET'])
+@cross_origin(supports_credentials=True)
+@jwt_required()
+def product_minus_one():
+    try:
+        user_id = current_identity.id
+        answer = requests.get(CART_API + "order?user_id=" + str(user_id))
         return json.loads(answer.text)
     except Exception as ex:
         return ({

@@ -73,3 +73,10 @@ def get_count_minus_1(user_id, product_id) -> bool:
             return True
 
     return False
+
+
+def clear_cart(cart):
+    cart["products"] = []
+    cart['full_price'] = 0
+    cart_update(cart)
+    return True

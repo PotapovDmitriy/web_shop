@@ -3,6 +3,7 @@ from flask_cors import cross_origin
 import requests
 import json
 from ..repository import cart_repository
+from ..message.message import send_message_for_item
 
 cart_routs = Blueprint('cart_routs', __name__)
 
@@ -80,6 +81,22 @@ def product_minus_one():
         user_id = int(request.args.get("user_id"))
         product_id = int(request.args.get("product_id"))
         return {"msg": cart_repository.get_count_minus_1(user_id, product_id)}
+    except Exception as ex:
+        return ({
+                    'ERROR': str(ex)
+                }, 400)
+
+
+@cart_routs.route('/order', methods=['GET'])
+@cross_origin(supports_credentials=True)
+def product_minus_one():
+    try:
+        user_id = int(request.args.get("user_id"))
+        cart = cart_repository.get_cart_by_user_id(user_id)
+        products = cart['products']
+        send_message_for_item(user_id, {"products": products})
+        # cart_repository.clear_cart(cart)
+        return {"msg": True}
     except Exception as ex:
         return ({
                     'ERROR': str(ex)

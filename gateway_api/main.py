@@ -8,7 +8,7 @@ from flask import request, make_response
 
 application = create_app('default')
 db.init_app(application)
-CORS(application, supports_credentials=True,allow_headers='*')
+CORS(application, supports_credentials=True, allow_headers='*')
 
 
 @application.before_first_request
@@ -23,7 +23,8 @@ def create_tables():
 @application.before_request
 def before_request():
     if request.method == "OPTIONS":
-        return make_response({'msg':True}, 204)
+        return make_response({'msg': True}, 204)
+
 
 @application.after_request
 def after_request_func(response):

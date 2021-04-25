@@ -222,3 +222,4 @@ networks:
   cart_api:
   cart_consumer:
 
+# Добавить обработку изменений состояния заказа и добавить контейнеры в docker-compose
