@@ -3,3 +3,4 @@ pymongo
 flask_pymongo
 flask_cors
 requests
+pika

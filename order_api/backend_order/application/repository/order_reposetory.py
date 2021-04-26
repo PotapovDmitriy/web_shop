@@ -1,4 +1,4 @@
-from order_api.backend_order.application.database import db
+from ..database import db
 from ..models.order import Order
 
 

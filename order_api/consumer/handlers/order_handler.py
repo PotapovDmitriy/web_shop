@@ -1,8 +1,9 @@
-from .repository import order_reposetory, snapshot_repository, event_repository
+import requests
+
+ORDER_API = "http://order_api:5018/"
 
 
 def create_new_order(user_id, products):
-    new_order = order_reposetory.add_new(user_id)
-    event_repository.add_new(new_order.id, 1, "created")
-    data = {'status': "created", "products": products}
-    snapshot_repository.add_new(new_order.id, 1, data)
+    json = {"user_id": user_id, "products": products}
+    print(json)
+    requests.post(ORDER_API + "new_order", json=json)

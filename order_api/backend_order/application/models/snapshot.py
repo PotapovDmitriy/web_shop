@@ -1,5 +1,5 @@
-from order_api.backend_order.application.database import db
-
+from ..database import db
+import json
 
 class Snapshot(db.Model):
     __table_args__ = {'extend_existing': True}
@@ -15,8 +15,12 @@ class Snapshot(db.Model):
         self.data = data
 
     def to_json(self):
+        data = json.loads(str(self.data).replace("\'", "\""))
+        status = data['status']
+        products = data['products']
         return {
             "order_id": self.order_id,
             "version": self.version,
-            "data": self.data
+            "products": products,
+            "status" : status
         }

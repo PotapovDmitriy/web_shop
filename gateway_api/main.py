@@ -2,7 +2,7 @@ from application import create_app
 from application.database import db
 from application.repository import role_repository, user_repository
 from application.service import auth_service
-from flask_jwt import JWT, jwt_required, current_identity
+from flask_jwt import JWT
 from flask_cors import CORS
 from flask import request, make_response
 

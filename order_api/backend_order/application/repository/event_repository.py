@@ -1,11 +1,14 @@
-from order_api.backend_order.application.database import db
+from ..database import db
 from ..models.event import Event
 
 
-def add_new(order_id, version, status) -> None:
+def add_new(order_id, version, status):
     event = Event(order_id, version, status)
     db.session.add(event)
+    db.session.flush()
+    db.session.refresh(event)
     db.session.commit()
+    return event
 
 
 def get_by_id(event_id):

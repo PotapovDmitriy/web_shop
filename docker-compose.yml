@@ -18,6 +18,7 @@ services:
     networks:
       - admin_api
       - db
+      - order_api
   mongo-express:
     image: mongo-express
     restart: always
@@ -148,16 +149,17 @@ services:
       - gateway_api
       - catalog
       - cart_api
-  admin_web:
-    container_name: admin_web
-    build:
-      context: ./admin_web_react
-      dockerfile: Dockerfile
-    ports:
-      - 8080:80
-    networks:
-      - admin_web
-      - admin_api
+      - order_api
+    admin_web:
+      container_name: admin_web
+      build:
+        context: ./admin_web_react
+        dockerfile: Dockerfile
+      ports:
+        - 8080:80
+      networks:
+        - admin_web
+        - admin_api
   catalog_api:
     container_name: catalog_api
     build:
@@ -175,16 +177,16 @@ services:
       - catalog
       - mongo
       - gateway_api
-  catalog_web:
-    container_name: catalog_web
-    build:
-      context: ./catalog_web
-      dockerfile: Dockerfile
-    ports:
-      - 8090:90
-    networks:
-      - catalog_web
-      - catalog
+    catalog_web:
+      container_name: catalog_web
+      build:
+        context: ./catalog_web
+        dockerfile: Dockerfile
+      ports:
+        - 8090:90
+      networks:
+        - catalog_web
+        - catalog
   cart_api:
     container_name: cart_api
     build:
@@ -204,11 +206,47 @@ services:
       - cart_api
       - gateway_api
       - admin_api
+  order_api:
+    container_name: order_api
+    build:
+      context: ./order_api/backend_order
+      dockerfile: Dockerfile
+    ports:
+      - 7030:5018
+    depends_on:
+      - db
+      - rabbit
+    volumes:
+      - ./app:/app
+    networks:
+      - order_consumer
+      - order_api
+      - db
+      - cart_api
+      - gateway_api
+  order_consumer:
+    container_name: order_consumer
+    restart: on-failure
+    build:
+      context: order_api/consumer
+      dockerfile: Dockerfile
+    links:
+      - order_api
+      - cart_api
+    depends_on:
+      - rabbit
+    networks:
+      - order_consumer
+      - cart_api
+      - rabbit
+      - order_api
+
 
 volumes:
   db_data: { }
   mongovolume:
 networks:
+  order_consumer:
   admin_api:
   db:
   catalog_consumer:
@@ -221,5 +259,7 @@ networks:
   catalog_web:
   cart_api:
   cart_consumer:
+  order_api:
+
 
 # Добавить обработку изменений состояния заказа и добавить контейнеры в docker-compose

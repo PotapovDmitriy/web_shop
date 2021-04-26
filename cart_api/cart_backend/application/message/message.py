@@ -17,8 +17,7 @@ def send_message_for_item(user_id, data):
     channel.basic_publish(exchange='app_que_ex_order',
                           routing_key='app_que_order',
                           body=json.dumps({"user_id": user_id,
-                                           "data": data,
-                                           "type_number": 1}))
+                                           "data": data}))
 
     print(" [x] Sent text for update key words in project")
     connection.close()

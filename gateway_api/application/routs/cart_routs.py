@@ -77,10 +77,10 @@ def product_minus_one():
                 }, 400)
 
 
-@cart_routs.route('/order', methods=['GET'])
+@cart_routs.route('/new_order', methods=['GET'])
 @cross_origin(supports_credentials=True)
 @jwt_required()
-def product_minus_one():
+def create_order():
     try:
         user_id = current_identity.id
         answer = requests.get(CART_API + "order?user_id=" + str(user_id))

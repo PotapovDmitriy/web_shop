@@ -12,10 +12,12 @@ def create_app(config_name):
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.secret_key = "123456"
 
-    # from .routs.product_routs import product_routs
-    # from .routs.category_routs import category_routs
+    from .routs.change_order_routs import order_routs
+    from .routs.order_consumer_routs import consumer_routs
+    from .routs.represent_order_routs import repr_order_routs
     #
-    # app.register_blueprint(product_routs)
-    # app.register_blueprint(category_routs)
+    app.register_blueprint(order_routs)
+    app.register_blueprint(consumer_routs)
+    app.register_blueprint(repr_order_routs)
 
     return app

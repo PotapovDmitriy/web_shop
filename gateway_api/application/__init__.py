@@ -14,10 +14,12 @@ def create_app(config_name):
     from .routs.admin_routs import admin_routs
     from .routs.cart_routs import cart_routs
     from .routs.auth_routs import auth_routs
+    from .routs.order_routs import order_routs
     #
     app.register_blueprint(buyer_routs)
     app.register_blueprint(admin_routs)
     app.register_blueprint(cart_routs)
     app.register_blueprint(auth_routs)
+    app.register_blueprint(order_routs)
 
     return app

@@ -89,13 +89,13 @@ def product_minus_one():
 
 @cart_routs.route('/order', methods=['GET'])
 @cross_origin(supports_credentials=True)
-def product_minus_one():
+def create_order():
     try:
         user_id = int(request.args.get("user_id"))
         cart = cart_repository.get_cart_by_user_id(user_id)
         products = cart['products']
         send_message_for_item(user_id, {"products": products})
-        # cart_repository.clear_cart(cart)
+        cart_repository.clear_cart(cart)
         return {"msg": True}
     except Exception as ex:
         return ({

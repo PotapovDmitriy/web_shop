@@ -1,4 +1,4 @@
-from order_api.backend_order.application.database import db
+from ..database import db
 from ..models.snapshot import Snapshot
 
 
@@ -22,7 +22,7 @@ def update(snapshot, new_version, new_data):
 
 
 def get_by_order(order_id) -> []:
-    return db.session.query(Snapshot).filter_by(order_id=order_id).all()
+    return db.session.query(Snapshot).filter_by(order_id=order_id).first()
 
 
 def get_all():
